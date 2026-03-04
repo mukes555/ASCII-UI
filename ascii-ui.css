@@ -1,0 +1,63 @@
+.ascii-ui-container {
+  position: relative;
+  overflow: hidden;
+  background: var(--ascii-ui-bg, #000000);
+  -webkit-overflow-scrolling: touch;
+}
+
+.ascii-ui-screen {
+  margin: 0;
+  padding: 0;
+  line-height: var(--ascii-ui-line-height, 1.2);
+  font-family: var(--ascii-ui-font, "Courier New", "Consolas", monospace);
+  font-size: var(--ascii-ui-font-size, 14px);
+  white-space: pre;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  touch-action: manipulation;
+}
+
+.ascii-ui-hidden-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  /* DO NOT use display:none */
+}
+
+.ascii-ui-blink {
+  animation: ascii-blink 1s step-end infinite;
+}
+
+@keyframes ascii-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Optional CRT effects */
+.ascii-ui-crt::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+  pointer-events: none;
+}
+
+.ascii-ui-glow {
+  text-shadow: 0 0 5px currentColor;
+}

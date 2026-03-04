@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TerminalAI</title>
+  <link rel="stylesheet" href="../ascii-ui.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #FFFFFF;
+      color: #0A0A0A;
+      overflow: hidden;
+    }
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      const errDiv = document.createElement('div');
+      errDiv.style.position = 'fixed';
+      errDiv.style.top = '0';
+      errDiv.style.left = '0';
+      errDiv.style.width = '100%';
+      errDiv.style.background = 'red';
+      errDiv.style.color = 'white';
+      errDiv.style.padding = '10px';
+      errDiv.style.fontFamily = 'monospace';
+      errDiv.style.zIndex = '9999';
+      errDiv.innerText = `Error: ${message}\nSource: ${source}:${lineno}:${colno}\nStack: ${error ? error.stack : ''}`;
+      document.body.appendChild(errDiv);
+    };
+  </script>
+  <script type="module" src="./landing.js"></script>
+</body>
+</html>
