@@ -29,8 +29,6 @@ Because you can code anything you want now. So we did. 🤷
 
 ## 🚀 Usage
 
-Include the CSS and JS, done:
-
 ```html
 <link rel="stylesheet" href="ascii-ui.css">
 <div id="app"></div>
@@ -50,7 +48,6 @@ Include the CSS and JS, done:
 </script>
 ```
 
-That's it. No `npm install`. No webpack. No babel. Copy the files and go.
 
 ## 📦 Components
 
@@ -87,21 +84,6 @@ ui.setTheme({
 });
 ```
 
-## 🏗️ Structure
-
-```
-ascii-ui/
-├── src/
-│   ├── index.js           # Entry point
-│   ├── AsciiUI.js         # Main class & factories
-│   ├── core/              # Engine, Renderer, Input, Animation
-│   ├── components/        # 30+ UI components
-│   └── layout/            # ScrollContainer
-├── themes/                # Dark, light & more
-├── demo/                  # Showcase & demos
-├── ascii-ui.css           # Required styles
-└── README.md
-```
 
 ## 📝 License
 
