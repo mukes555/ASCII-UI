@@ -54,7 +54,7 @@ const footer = ui.statusBar({
     x: 0, y: ROWS() - 1, width: COLS(),
     segments: [
         { text: ' (c) 2026 NeuralForge', width: 24 },
-        { text: 'Built with ASCII UI', width: 22, align: 'right' }
+        { text: 'github.com/mukes555/ASCII-UI', width: 30, align: 'right' }
     ]
 });
 ui.add(footer);

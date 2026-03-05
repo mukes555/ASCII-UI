@@ -13,7 +13,7 @@
 
 ## Why?
 
-Because you can code anything you want now. So we did. 🤷
+Because you can code anything you want now. So I did. 🤷
 
 ![ASCII UI Showcase](demo/screenshot.png)
 

@@ -32,7 +32,7 @@ ui.add(main);
 // -- Footer --
 const footer = ui.statusBar({
   x: 0, y: ui.screen.rows - 1, width: ui.screen.cols,
-  segments: [{ text: '(c) 2026 ASCII UI', width: 20 }, { text: 'Showcase * Components', width: 24, align: 'right' }]
+  segments: [{ text: '(c) 2026 ASCII UI', width: 20 }, { text: 'github.com/mukes555/ASCII-UI', width: 30, align: 'right' }]
 });
 ui.add(footer);
 
@@ -78,7 +78,8 @@ function makeLogo(cols) {
   return ['ASCII', ' UI'].join('\n');
 }
 
-const logo = ui.label({ x: 2, y: 1, text: makeLogo(20), width: 20, wrap: false });
+const logo = ui.link({ x: 2, y: 1, text: makeLogo(20), width: 20 });
+logo.on.click = () => window.open('https://github.com/mukes555/ASCII-UI', '_blank');
 sidebarContent.addChild(logo);
 
 // Animated mascot label
@@ -101,7 +102,14 @@ themeSwitch.on = {
 // Divider below toggle
 sidebarContent.addChild(ui.divider({ x: 2, y: 10, length: 18, style: 'dashed' }));
 
-let navY = 12;
+// Link to NeuralForge startup demo
+const demoLink = ui.link({ x: 2, y: 12, text: '>> Live Demo', active: false });
+demoLink.on.click = () => window.open('startup.html', '_blank');
+sidebarContent.addChild(demoLink);
+
+sidebarContent.addChild(ui.divider({ x: 2, y: 14, length: 18, style: 'dashed' }));
+
+let navY = 16;
 for (const s of sections) {
   const link = ui.link({ x: 2, y: navY, text: s.label, active: false });
   link.on.click = () => scrollTo(s.key);
