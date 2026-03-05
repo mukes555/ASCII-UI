@@ -13,7 +13,9 @@
 
 ## Why?
 
-Because you can code anything you want now. So I did. 🤷
+AI writes your code now. You could build literally anything — a SaaS, an OS, a dating app for your houseplants. I looked at the infinite canvas of possibility and thought: *"What if buttons… but worse?"*
+
+So here we are. 30+ components made entirely of `│`, `─`, and `█`. No canvas. No SVG. No reason. Just vibes and box-drawing characters. 🤷
 
 ![ASCII UI Showcase](demo/screenshot.png)
 
