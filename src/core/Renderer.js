@@ -120,13 +120,13 @@ export class Renderer {
     }
   }
 
-  set(x, y, char, fg, bg, bold, underline, italic) {
+  set(x, y, char, fg, bg, bold, underline, italic, scale) {
     x = Math.floor(x);
     y = Math.floor(y);
     if (x < 0 || x >= this.cols || y < 0 || y >= this.rows) return;
     const row = this.buffer[y];
     if (!row || !row[x]) return;
-    row[x].set(char, fg, bg, bold, underline, italic);
+    row[x].set(char, fg, bg, bold, underline, italic, scale);
   }
 
   text(x, y, str, fg, bg) {
@@ -150,6 +150,22 @@ export class Renderer {
   underlineText(x, y, str, fg, bg) {
     for (let i = 0; i < str.length; i++) {
       this.set(x + i, y, str[i], fg, bg, false, true, false);
+    }
+  }
+
+  scaledText(x, y, str, fg, bg, scale, bold) {
+    // Write the full string as a single scaled block.
+    // The first cell stores the string + scale info. Remaining cells are spacers.
+    const cellSpan = Math.ceil(str.length * scale);
+    this.set(x, y, str[0], fg, bg, bold || false, false, false, scale);
+    // Store the full string on the first cell's buffer entry for flush() to read
+    const row = this.buffer[Math.floor(y)];
+    if (row && row[Math.floor(x)]) {
+      row[Math.floor(x)]._scaledStr = str;
+    }
+    // Mark remaining cells as spacers
+    for (let s = 1; s < cellSpan && (x + s) < this.cols; s++) {
+      this.set(x + s, y, '', fg, bg, false, false, false, -1);
     }
   }
 
@@ -195,6 +211,15 @@ export class Renderer {
 
       for (let x = 0; x < this.cols; x++) {
         const cell = this.buffer[y][x];
+
+        // Skip marker cells (occupied by a scaled character's overflow)
+        if (cell.scale === -1) {
+          // Still need to output a character to maintain grid width
+          if (prevStyle) { rowHtml += '</span>'; prevStyle = ''; }
+          rowHtml += '<span style="visibility:hidden;">&nbsp;</span>';
+          continue;
+        }
+
         const char = cell.char === undefined ? ' ' : cell.char;
         const fg = cell.fg || 'inherit';
         const bg = cell.bg || 'transparent';
@@ -203,13 +228,32 @@ export class Renderer {
         if (cell.italic) style += 'font-style:italic;';
         if (cell.underline) style += 'text-decoration:underline;';
 
+        // Scaled cells get rendered as a single large-font block
+        if (cell.scale > 0 && cell._scaledStr) {
+          if (prevStyle) { rowHtml += '</span>'; prevStyle = ''; }
+          const scaledFontSize = Math.round(this.fontSize * cell.scale);
+          let sStyle = `color:${fg};background:${bg};display:inline-block;font-size:${scaledFontSize}px;line-height:${this.charHeight}px;vertical-align:top;white-space:pre;`;
+          if (cell.bold) sStyle += 'font-weight:bold;';
+          // Escape the full string
+          let escaped = '';
+          for (const ch of cell._scaledStr) {
+            if (ch === ' ') escaped += '&nbsp;';
+            else if (ch === '&') escaped += '&amp;';
+            else if (ch === '<') escaped += '&lt;';
+            else if (ch === '>') escaped += '&gt;';
+            else escaped += ch;
+          }
+          rowHtml += `<span style="${sStyle}">${escaped}</span>`;
+          continue;
+        }
+
         if (style !== prevStyle) {
           if (prevStyle) rowHtml += '</span>';
           rowHtml += `<span style="${style}">`;
           prevStyle = style;
         }
 
-        if (char === ' ') rowHtml += '&nbsp;';
+        if (char === ' ' || char === '') rowHtml += '&nbsp;';
         else if (char === '&') rowHtml += '&amp;';
         else if (char === '<') rowHtml += '&lt;';
         else if (char === '>') rowHtml += '&gt;';

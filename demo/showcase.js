@@ -169,19 +169,19 @@ section('typography', 'Typography');
 desc('Heading hierarchy, paragraph, and inline text styles.');
 spacer();
 
-// H1 -- bold banner with === underline
-content.addChild(ui.label({ x: 4, y, text: 'Heading One (H1)', width: 40, bold: true }));
-y += 1;
+// H1 -- scaled large (1.8x) + === underline
+content.addChild(ui.label({ x: 4, y, text: 'Heading One (H1)', width: 50, bold: true, scale: 1.8 }));
+y += 2;
 content.addChild(ui.label({ x: 4, y, text: '================', width: 40, bold: true }));
 y += 2;
 
-// H2 -- bold with --- underline
-content.addChild(ui.label({ x: 4, y, text: 'Heading Two (H2)', width: 40, bold: true }));
-y += 1;
+// H2 -- scaled medium (1.4x) + --- underline
+content.addChild(ui.label({ x: 4, y, text: 'Heading Two (H2)', width: 40, bold: true, scale: 1.4 }));
+y += 2;
 content.addChild(ui.label({ x: 4, y, text: '- - - - - - - -', width: 40 }));
 y += 2;
 
-// H3 -- bold, no underline
+// H3 -- normal size, bold
 content.addChild(ui.label({ x: 4, y, text: 'Heading Three (H3)', width: 40, bold: true }));
 y += 2;
 

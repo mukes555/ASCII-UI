@@ -34,8 +34,12 @@ export class Label extends Component {
     const maxLines = this.props.height ? Math.min(this.props.height, out.length) : out.length;
     const isBold = !!this.props.bold;
     const isItalic = !!this.props.italic;
+    const scale = this.props.scale || 0;
+
     for (let i = 0; i < maxLines; i++) {
-      if (isBold) {
+      if (scale > 0) {
+        renderer.scaledText(x, y + i, out[i], fg, bg, scale, isBold);
+      } else if (isBold) {
         renderer.boldText(x, y + i, out[i], fg, bg);
       } else if (isItalic) {
         renderer.italicText(x, y + i, out[i], fg, bg);
