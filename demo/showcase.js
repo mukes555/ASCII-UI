@@ -29,12 +29,11 @@ const main = ui.scrollContainer({
 });
 ui.add(main);
 
-// -- Footer --
+// -- Footer (created now, added last for correct render order) --
 const footer = ui.statusBar({
   x: 0, y: ui.screen.rows - 1, width: ui.screen.cols,
-  segments: [{ text: '(c) 2026 ASCII UI', width: 20 }, { text: 'github.com/mukes555/ASCII-UI', width: 30, align: 'right' }]
+  segments: [{ text: '(c) 2026 ASCII UI', width: 20 }, { text: 'Showcase * Components', width: 24, align: 'right' }]
 });
-ui.add(footer);
 
 const content = ui.panel({ x: 0, y: 0, width: main.width - 2, height: 380, borderStyle: 'none' });
 main.addChild(content);
@@ -78,8 +77,7 @@ function makeLogo(cols) {
   return ['ASCII', ' UI'].join('\n');
 }
 
-const logo = ui.link({ x: 2, y: 1, text: makeLogo(20), width: 20 });
-logo.on.click = () => window.open('https://github.com/mukes555/ASCII-UI', '_blank');
+const logo = ui.label({ x: 2, y: 1, text: makeLogo(20), width: 20, wrap: false });
 sidebarContent.addChild(logo);
 
 // Animated mascot label
@@ -102,14 +100,19 @@ themeSwitch.on = {
 // Divider below toggle
 sidebarContent.addChild(ui.divider({ x: 2, y: 10, length: 18, style: 'dashed' }));
 
-// Link to NeuralForge startup demo
-const demoLink = ui.link({ x: 2, y: 12, text: '>> Live Demo', active: false });
+// Link to startup demo
+const demoLink = ui.link({ x: 2, y: 11, text: '>> Live Demo', active: false });
 demoLink.on.click = () => window.open('startup.html', '_blank');
 sidebarContent.addChild(demoLink);
 
-sidebarContent.addChild(ui.divider({ x: 2, y: 14, length: 18, style: 'dashed' }));
+// Link to GitHub repo
+const ghLink = ui.link({ x: 2, y: 12, text: '>> GitHub', active: false });
+ghLink.on.click = () => window.open('https://github.com/mukes555/ASCII-UI', '_blank');
+sidebarContent.addChild(ghLink);
 
-let navY = 16;
+sidebarContent.addChild(ui.divider({ x: 2, y: 13, length: 18, style: 'dashed' }));
+
+let navY = 14;
 for (const s of sections) {
   const link = ui.link({ x: 2, y: navY, text: s.label, active: false });
   link.on.click = () => scrollTo(s.key);
@@ -497,6 +500,9 @@ main.props.contentHeight = content.height;
 const toastComp = ui.toast({ x: ui.screen.cols - 38, y: 2, width: 36, variant: 'success', duration: 2500 });
 ui.add(toastComp);
 
+// Add footer last so it renders on top of scroll content
+ui.add(footer);
+
 function toast(msg) {
   toastComp.show(msg);
   ui.render();
@@ -583,6 +589,7 @@ function relayout() {
   content.width = main.width - 2;
   content.props.width = content.width;
   footer.y = rows - 1;
+  footer.props.y = rows - 1;
   footer.width = cols;
   footer.props.width = cols;
   toastComp.x = Math.max(0, cols - 38);

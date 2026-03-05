@@ -54,9 +54,10 @@ const footer = ui.statusBar({
     x: 0, y: ROWS() - 1, width: COLS(),
     segments: [
         { text: ' (c) 2026 NeuralForge', width: 24 },
-        { text: 'github.com/mukes555/ASCII-UI', width: 30, align: 'right' }
+        { text: 'Built with ASCII UI', width: 22, align: 'right' }
     ]
 });
+footer.zIndex = 100;
 ui.add(footer);
 
 // ─── Main scroll area ───────────────────────────────────────
