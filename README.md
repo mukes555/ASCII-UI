@@ -36,7 +36,7 @@ Because you can code anything you want now. So I did. 🤷
 <script type="module">
   import { AsciiUI } from './src/index.js';
 
-  const ui = new AsciiUI('app', { autoSize: true });
+  const ui = new AsciiUI('#app', { autoSize: true });
 
   const panel = ui.panel({ x: 2, y: 2, width: 40, height: 10, title: 'Hello' });
 
@@ -64,12 +64,12 @@ Because you can code anything you want now. So I did. 🤷
 ## 🎨 Theming
 
 ```javascript
-import { themes } from './themes/index.js';
+import { zinc, zincLight } from './themes/index.js';
 
-const ui = new AsciiUI('app', { theme: themes.dark });
+const ui = new AsciiUI('#app', { theme: zinc });
 
 // Switch at runtime
-ui.setTheme(themes.light);
+ui.setTheme(zincLight);
 ```
 
 Roll your own:
